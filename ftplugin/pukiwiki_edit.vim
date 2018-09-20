@@ -1,12 +1,12 @@
 " vim: set ts=4 sts=4 sw=4 noet ai fdm=marker:
 
-scriptencoding euc-jp
+scriptencoding utf-8
 
 nnoremap <silent> <buffer> <CR>    :call <SID>PW_move()<CR>
 nnoremap <silent> <buffer> <TAB>   :call <SID>PW_bracket_move()<CR>
 nnoremap <silent> <buffer> <S-TAB> :call <SID>PW_bracket_move_rev()<CR>
 
-let s:pukivim_ro_menu = "\n[[¥È¥Ã¥×]] [[¿·µ¬]] [[°ìÍ÷]] [[Ã±¸ì¸¡º÷]] [[ºÇ½ª¹¹¿·]] [[¥Ø¥ë¥×]]\n------------------------------------------------------------------------------\n"
+let s:pukivim_ro_menu = "\n[[ãƒˆãƒƒãƒ—]] [[æ–°è¦]] [[ä¸€è¦§]] [[å˜èªæ¤œç´¢]] [[æœ€çµ‚æ›´æ–°]] [[ãƒ˜ãƒ«ãƒ—]]\n------------------------------------------------------------------------------\n"
 "let s:bracket_name = '\[\[\%(\s\)\@!:\=[^\r\n\t[\]<>#&":]\+:\=\%(\s\)\@<!\]\]'
 let s:bracket_name = '\[\[\%(\s\)\@!:\=[^\r\n\t[\]<>#&":]\+:\=\%(\s\)\@<!\]\]'
 "let s:bracket_name = '\[\[\_.\{-}\]\]'
@@ -29,44 +29,44 @@ function! s:PW_move()
 	endif
 
 	if &modified
-		call AL_echo('ÊÑ¹¹¤¬ÊİÂ¸¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£', 'ErrorMsg')
+		call AL_echo('å¤‰æ›´ãŒä¿å­˜ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚', 'ErrorMsg')
 		return
 	endif
 
 	let cur = substitute(cur, '\[\[\(.*\)\]\]', '\1', '')
 	if line('.') < 4
-		if cur == '¥È¥Ã¥×'
+		if cur == 'ãƒˆãƒƒãƒ—'
 			let g:pukiwiki_current_site_top = b:top
 			call PW_get_edit_page(b:site_name, b:url, b:enc, b:top, b:top)
 		endif
-		if cur == '¥ê¥í¡¼¥É'
+		if cur == 'ãƒªãƒ­ãƒ¼ãƒ‰'
 			let g:pukiwiki_current_site_top = b:top
 			call PW_get_edit_page(b:site_name, b:url, b:enc, b:top, b:page)
 		endif
-		if cur == '¿·µ¬'
-			let page = input('¿·µ¬¥Ú¡¼¥¸Ì¾: ')
+		if cur == 'æ–°è¦'
+			let page = input('æ–°è¦ãƒšãƒ¼ã‚¸å: ')
 			if page == ''
 				return
 			endif
 			call PW_get_edit_page(b:site_name, b:url, b:enc, b:top, page)
 		endif
-		if cur == '°ìÍ÷'
+		if cur == 'ä¸€è¦§'
 			call s:PW_show_page_list()
 		endif
-		if cur == 'Ã±¸ì¸¡º÷'
+		if cur == 'å˜èªæ¤œç´¢'
 			call s:PW_show_search()
 		endif
-		if cur == 'ºÇ½ª¹¹¿·'
+		if cur == 'æœ€çµ‚æ›´æ–°'
 			call s:PW_show_recent()
 		endif
-		if cur == '¥Ø¥ë¥×'
-			call PW_get_edit_page(b:site_name, b:url, b:enc, b:top, '¥Ø¥ë¥×')
+		if cur == 'ãƒ˜ãƒ«ãƒ—'
+			call PW_get_edit_page(b:site_name, b:url, b:enc, b:top, 'ãƒ˜ãƒ«ãƒ—')
 		endif
 		return
 	endif
 
-	" InterWikiName¤Î¥¨¥¤¥ê¥¢¥¹¤Ç¤Ï¤Ê¤¤¥¨¥¤¥ê¥¢¥¹
-	" ¤Ä¤Ş¤ê¡¢¤¿¤À¤Î¥¨¥¤¥ê¥¢¥¹
+	" InterWikiNameã®ã‚¨ã‚¤ãƒªã‚¢ã‚¹ã§ã¯ãªã„ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	" ã¤ã¾ã‚Šã€ãŸã ã®ã‚¨ã‚¤ãƒªã‚¢ã‚¹
 	if cur =~ '>'
 		let cur = substitute(cur, '^.*>\([^:]*\)$', '\1', '')
 	endif
@@ -153,7 +153,7 @@ endif"}}}
 
 if !exists('*s:PW_show_search')"{{{
 function! s:PW_show_search()
-	let word = input('¥­¡¼¥ï¡¼¥É: ')
+	let word = input('ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰: ')
 	if word == ''
 		return
 	endif
@@ -164,7 +164,7 @@ function! s:PW_show_search()
 	endif
 
 	let result = tempname()
-	let cmd = 'curl -s -o ' . result . ' -d encode_hint=' . AL_urlencode('¤×')
+	let cmd = 'curl -s -o ' . result . ' -d encode_hint=' . AL_urlencode('ã·')
 	let cmd = cmd . ' -d word=' . AL_urlencode(word)
 	let cmd = cmd . ' -d type=' . type . ' -d cmd=search ' . b:url
 	call AL_system(cmd)

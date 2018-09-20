@@ -1,5 +1,5 @@
 
-scriptencoding euc-jp
+scriptencoding utf-8
 
 runtime! syntax/help.vim
 
@@ -17,6 +17,6 @@ syntax match BodyDelim display "^-\{3,}.*--$"
 "syntax match Head display "\\\@<!|[^"*|]\+|"
 "syntax match NotEditable display "===== Not Editable ====="
 
-" �Ǿ��ޥå�
+" 最小マッチ
 " \_.\{-}
 

@@ -4,27 +4,27 @@ if exists('plugin_pukiwiki_disable')
 	finish
 endif
 
-scriptencoding euc-jp
+scriptencoding utf-8
 
-" global ÊÑ¿ô
+" global å¤‰æ•°
 
-" ¥Ç¥Ğ¥Ã¥°ÍÑ
+" ãƒ‡ãƒãƒƒã‚°ç”¨
 if !exists('g:pukiwiki_debug')
 	let g:pukiwiki_debug = 0
 endif
 
-" http://vimwiki.net/pukivim_version ¤ò¼èÆÀ¤·¤Æ
-" ¥¹¥Ê¥Ã¥×¥·¥ç¥Ã¥È¤¬¹¹¿·¤µ¤ì¤Æ¤¤¤ë¤«¥Á¥§¥Ã¥¯¤¹¤ë¡£
+" http://vimwiki.net/pukivim_version ã‚’å–å¾—ã—ã¦
+" ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆãŒæ›´æ–°ã•ã‚Œã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã€‚
 if !exists('g:pukiwiki_check_snapshot')
-	let g:pukiwiki_check_snapshot = 1
+	let g:pukiwiki_check_snapshot = 0
 endif
 
-" ¥Ö¥Ã¥¯¥Ş¡¼¥¯¤òÊİÂ¸¤¹¤ë¾ì½ê
-" ¥Ş¥ë¥Á¥æ¡¼¥¶ÀßÄê
+" ãƒ–ãƒƒã‚¯ãƒãƒ¼ã‚¯ã‚’ä¿å­˜ã™ã‚‹å ´æ‰€
+" ãƒãƒ«ãƒãƒ¦ãƒ¼ã‚¶è¨­å®š
 if !exists('g:pukiwiki_multiuser')
 	let g:pukiwiki_multiuser = has('unix') && !has('macunix') ? 1 : 0
 endif
-" ¥æ¡¼¥¶¥Õ¥¡¥¤¥ë¤Î°ÌÃÖÀßÄê
+" ãƒ¦ãƒ¼ã‚¶ãƒ•ã‚¡ã‚¤ãƒ«ã®ä½ç½®è¨­å®š
 if !exists('g:pukiwiki_datadir')
 	if g:pukiwiki_multiuser
 		if has('win32')
@@ -45,7 +45,7 @@ let s:version_url = 'http://vimwiki.net/pukivim_version'
 command! PukiVim :call PukiWiki()
 
 function! PW_buf_vars()"{{{
-	" ¥Ç¥Ğ¥Ã¥°ÍÑ
+	" ãƒ‡ãƒãƒƒã‚°ç”¨
 	call AL_echokv('site_name' , b:site_name)
 	call AL_echokv('url'       , b:url)
 	call AL_echokv('enc'       , b:enc)
@@ -58,20 +58,20 @@ endfunction"}}}
 function! PukiWiki()"{{{
 	if !s:PW_init_check()
 		echohl ErrorMsg 
-		echo 'µ¯Æ°¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£'
+		echo 'èµ·å‹•ã«å¤±æ•—ã—ã¾ã—ãŸã€‚'
 		echohl None
 		return
 	endif
 
 	if !s:PW_read_pukiwiki_list()
-		AL_echo('¥Ö¥Ã¥¯¥Ş¡¼¥¯¤ÎÆÉ¤ß¹ş¤ß¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£', 'ErrorMsg')
+		AL_echo('ãƒ–ãƒƒã‚¯ãƒãƒ¼ã‚¯ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸã€‚', 'ErrorMsg')
 		return
 	endif
 
-	" ºÇ¿·ÈÇ¤Î¥Á¥§¥Ã¥¯
+	" æœ€æ–°ç‰ˆã®ãƒã‚§ãƒƒã‚¯
 	if g:pukiwiki_check_snapshot
 		if s:PW_is_exist_new()
-			call AL_echo('PukiVim ¤Î¥¹¥Ê¥Ã¥×¥·¥ç¥Ã¥È¤¬¹¹¿·¤µ¤ì¤Æ¤¤¤Ş¤¹¡£', 'WarningMsg')
+			call AL_echo('PukiVim ã®ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆãŒæ›´æ–°ã•ã‚Œã¦ã„ã¾ã™ã€‚', 'WarningMsg')
 			call AL_echo('')
 		endif
 	endif
@@ -89,40 +89,40 @@ function! s:PW_read_pukiwiki_list()"{{{
 endfunction"}}}
 
 function! s:PW_init_check()"{{{
-	" alice.vim¤Î¥í¡¼¥É¤ò³Î¼Â¤Ë¤¹¤ë
+	" alice.vimã®ãƒ­ãƒ¼ãƒ‰ã‚’ç¢ºå®Ÿã«ã™ã‚‹
 	if !exists('*AL_version')
 		runtime! plugin/alice.vim
 	endif
 
-	" alice.vim ¤ÎÍ­Ìµ¤ò¥Á¥§¥Ã¥¯
+	" alice.vim ã®æœ‰ç„¡ã‚’ãƒã‚§ãƒƒã‚¯
 	if !exists('*AL_version')
 		echohl ErrorMsg
-		echo 'alice.vim ¤¬¥í¡¼¥É¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£'
+		echo 'alice.vim ãŒãƒ­ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚'
 		echohl None
 		return 0
 	endif
 
-	" curl ¤ÎÍ­Ìµ¤ò¥Á¥§¥Ã¥¯
+	" curl ã®æœ‰ç„¡ã‚’ãƒã‚§ãƒƒã‚¯
 	let curl = 'curl'
 	if has('win32')
 		let curl = 'curl.exe'
 	endif
 	if curl != AL_hascmd('curl')
-		call AL_echo('curl ¤¬¸«¤Ä¤«¤ê¤Ş¤»¤ó¡£', 'ErrorMsg')
+		call AL_echo('curl ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚', 'ErrorMsg')
 		return 0
 	endif
 
 	if !AL_mkdir(g:pukiwiki_datadir)
-		AL_echo('¥Ç¡¼¥¿¥Ç¥£¥ì¥¯¥È¥ê¡¼¤¬ºîÀ®¤Ç¤­¤Ş¤»¤ó¡£', 'ErrorMsg')
+		AL_echo('ãƒ‡ãƒ¼ã‚¿ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ¼ãŒä½œæˆã§ãã¾ã›ã‚“ã€‚', 'ErrorMsg')
 		return 0
 	endif
 
-	" BookMark ºÇ½é¤ÏÌµ¤¤¤«¤é¥¹¥¯¥ê¥×¥È¤ËÉÕÂ°¤ÎÊª¤ò¥æ¡¼¥¶¡¼ÍÑ¤Ë¥³¥Ô¡¼¤¹¤ë¡£
+	" BookMark æœ€åˆã¯ç„¡ã„ã‹ã‚‰ã‚¹ã‚¯ãƒªãƒ—ãƒˆã«ä»˜å±ã®ç‰©ã‚’ãƒ¦ãƒ¼ã‚¶ãƒ¼ç”¨ã«ã‚³ãƒ”ãƒ¼ã™ã‚‹ã€‚
 	let s:pukiwiki_list = g:pukiwiki_datadir . '/pukiwiki.list'
 	let s:pukiwiki_list_dist = g:pukivim_dir . '/pukiwiki.list-dist'
 	if !filereadable(s:pukiwiki_list)
 		if !AL_filecopy(s:pukiwiki_list_dist, s:pukiwiki_list)
-			call AL_echo('pukiwiki.list-dist ¤Î¥³¥Ô¡¼¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£', 'ErrorMsg')
+			call AL_echo('pukiwiki.list-dist ã®ã‚³ãƒ”ãƒ¼ã«å¤±æ•—ã—ã¾ã—ãŸã€‚', 'ErrorMsg')
 			return 0
 		endif
 	endif
@@ -131,7 +131,7 @@ function! s:PW_init_check()"{{{
 endfunction"}}}
 
 function! s:PW_is_exist_new()"{{{
-	" ºÇ¿·¤Î¥¹¥Ê¥Ã¥×¥·¥ç¥Ã¥È¤¬Í­¤ë¤Î¤«¥Á¥§¥Ã¥¯
+	" æœ€æ–°ã®ã‚¹ãƒŠãƒƒãƒ—ã‚·ãƒ§ãƒƒãƒˆãŒæœ‰ã‚‹ã®ã‹ãƒã‚§ãƒƒã‚¯
 	let cmd = 'curl -s ' . AL_quote(s:version_url)
 	let result = system(cmd)
 	if result > s:version_serial
@@ -153,7 +153,7 @@ function! PW_get_edit_page(site_name, url, enc, top, page)"{{{
 	let result = iconv(result, a:enc, &enc)
 
 	if result !~ '<textarea\_.\{-}>\_.\{-}</textarea>\_.\{-}<textarea'
-		call AL_echo('¥Ú¡¼¥¸¤ÎÆÉ¤ß¹ş¤ß¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£Åà·ë¤µ¤ì¤Æ¤¤¤ë¤«¡¢Ç§¾Ú¤¬É¬Í×¤Ç¤¹¡£', 'WarningMsg')
+		call AL_echo('ãƒšãƒ¼ã‚¸ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸã€‚å‡çµã•ã‚Œã¦ã„ã‚‹ã‹ã€èªè¨¼ãŒå¿…è¦ã§ã™ã€‚', 'WarningMsg')
 		call delete(tmp)
 		return
 	endif
@@ -177,7 +177,8 @@ function! PW_get_edit_page(site_name, url, enc, top, page)"{{{
 
 	execute ":setlocal indentexpr="
 	execute ":setlocal noai"
-	silent! execute "normal! i" . a:site_name . " " . a:page . "\n[[¥È¥Ã¥×]] [[¥ê¥í¡¼¥É]] [[¿·µ¬]] [[°ìÍ÷]] [[Ã±¸ì¸¡º÷]] [[ºÇ½ª¹¹¿·]] [[¥Ø¥ë¥×]]\n------------------------------------------------------------------------------\n"
+	execute ":setlocal paste"
+	silent! execute "normal! i" . a:site_name . " " . a:page . "\n[[ãƒˆãƒƒãƒ—]] [[ãƒªãƒ­ãƒ¼ãƒ‰]] [[æ–°è¦]] [[ä¸€è¦§]] [[å˜èªæ¤œç´¢]] [[æœ€çµ‚æ›´æ–°]] [[ãƒ˜ãƒ«ãƒ—]]\n------------------------------------------------------------------------------\n"
 	silent! execute "normal! i" . msg
 
 	call AL_decode_entityreference_with_range('%')
@@ -222,7 +223,7 @@ endfunction"}}}
 function! PW_write()"{{{
 
 	let notimestamp = ''
-	let last_confirm = input('¥¿¥¤¥à¥¹¥¿¥ó¥×¤òÊÑ¹¹¤·¤Ê¤¤¡£(y/N): ')
+	let last_confirm = input('ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’å¤‰æ›´ã—ãªã„ã€‚(y/N): ')
 	if last_confirm =~ '^\cy'
 		let notimestamp = 'true'
 	endif
@@ -243,11 +244,9 @@ function! PW_write()"{{{
 		let cl = cl + 1
 	endwhile
 
-	if 1 < line('$')
-		silent! %s/$/%0A/g
-		execute ":noh"
-		let @/ = ''
-	endif
+	" ãƒãƒƒãƒ•ã‚¡å†…ã‚’ç·¨é›†ã—ãŸå¾Œã€&enc ã¨ b:enc ãŒç•°ãªã‚‹å ´åˆ
+	" AL_write ãŒã‚³ã‚±ã‚‹ã®ã§ &enc ã«å¼·åˆ¶ã™ã‚‹
+	silent! execute ":set fenc=" . &enc
 
 	if g:pukiwiki_debug
 		let file = g:pukiwiki_datadir . '/pukiwiki.2'
@@ -255,17 +254,29 @@ function! PW_write()"{{{
 		call AL_echo(file)
 	endif
 
+	if 1 < line('$')
+		silent! %s/$/%0A/g
+		execute ":noh"
+		let @/ = ''
+	endif
+
+	if g:pukiwiki_debug
+		let file = g:pukiwiki_datadir . '/pukiwiki.3'
+		call AL_write(file)
+		call AL_echo(file)
+	endif
+
 	execute ":setlocal noai"
-	let cmd = "normal! 1G0iencode_hint=" . AL_urlencode( iconv( '¤×', &enc, b:enc ) )
+	let cmd = "normal! 1G0iencode_hint=" . AL_urlencode( iconv( 'ã·', &enc, b:enc ) )
 	let cmd = cmd . "&cmd=edit&page=" . AL_urlencode( iconv( b:page, &enc, b:enc ) )
-	let cmd = cmd . "&digest=" . b:digest . "&write=" . AL_urlencode( iconv( '¥Ú¡¼¥¸¤Î¹¹¿·', &enc, b:enc ) )
+	let cmd = cmd . "&digest=" . b:digest . "&write=" . AL_urlencode( iconv( 'ãƒšãƒ¼ã‚¸ã®æ›´æ–°', &enc, b:enc ) )
 	let cmd = cmd . "&notimestamp=" . notimestamp
 	let cmd = cmd . "&original="
 	let cmd = cmd . "&msg="
 	call AL_execute(cmd)
 
 	if g:pukiwiki_debug
-		let file = g:pukiwiki_datadir . '/pukiwiki.3'
+		let file = g:pukiwiki_datadir . '/pukiwiki.4'
 		call AL_write(file)
 		call AL_echo(file)
 	endif
@@ -277,20 +288,26 @@ function! PW_write()"{{{
 	call AL_system(cmd)
 	call delete(post)
 
-	" À®¸ù¤¹¤ë¤ÈPukiWiki¤¬location¥Ø¥Ã¥À¡¼¤òÅÇ¤¯¤Î¤Çresult¤¬ºîÀ®¤µ¤ì¤Ê¤¤¡£
-	" ºîÀ®¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤Ë¤Ï²¿¤é¤«¤Î¥¨¥é¡¼¤òHTML¤ÇÅÇ¤­½Ğ¤·¤Æ¤¤¤ë¡£
-	if filereadable(result)
+	if g:pukiwiki_debug
+		call rename(result, g:pukiwiki_datadir . '/result.txt')
+		let result = g:pukiwiki_datadir . '/result.txt'
+	endif
+
+	" æˆåŠŸã™ã‚‹ã¨PukiWikiãŒlocationãƒ˜ãƒƒãƒ€ãƒ¼ã‚’åãã®ã§resultãŒä½œæˆã•ã‚Œãªã„ã€‚
+	" ä½œæˆã•ã‚Œã¦ã„ã‚‹å ´åˆã«ã¯ä½•ã‚‰ã‹ã®ã‚¨ãƒ©ãƒ¼ã‚’HTMLã§åãå‡ºã—ã¦ã„ã‚‹ã€‚
+	" curl ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã«ã‚ˆã£ã¦ã¯ã€æˆåŠŸã™ã‚‹ã¨ã‚µã‚¤ã‚ºï¼ã® result ãŒç”Ÿæˆã•ã‚Œã‚‹ã€‚
+	if getfsize(result)
 		let body = PW_fileread(result)
+		call delete(result)
 		let body = iconv( body, b:enc, &enc )
-		if body =~ '<title>\_.\{-}¤òºï½ü¤·¤Ş¤·¤¿\_.\{-}<\/title>'
+		if body =~ '<title>\_.\{-}ã‚’å‰Šé™¤ã—ã¾ã—ãŸ\_.\{-}<\/title>'
 			let page = b:page
 			call PW_get_edit_page(b:site_name, b:url, b:enc, b:top, b:top)
-			call AL_echo(page . ' ¤òºï½ü¤·¤Ş¤·¤¿')
+			call AL_echo(page . ' ã‚’å‰Šé™¤ã—ã¾ã—ãŸ')
 			return
 		endif
 
-		" ¼ºÇÔ
-		call delete(result)
+		" å¤±æ•—
 		execute ":undo"
 		execute ":set nomodified"
 		execute ":setlocal nomodifiable"
@@ -301,20 +318,20 @@ function! PW_write()"{{{
 		let top       = b:top
 		let page      = b:page
 
-		" ½ñ¤­¹ş¤ß¤·¤è¤¦¤È¤·¤¿¥Ğ¥Ã¥Õ¥¡¤ÎÌ¾Á°¤ÎÁ°¤Ë'¥í¡¼¥«¥ë'¤òÉÕ¤±¤Æ
-		" ¸½ºß¤Î¥µ¡¼¥Ğ¡¼¾å¤ÎÆâÍÆ¤ò¼èÆÀ¤·¤Æ'diffthis'¤ò¼Â¹Ô¤¹¤ë¡£
-		let status_line = '¥í¡¼¥«¥ë ' . page . ' ' . site_name
+		" æ›¸ãè¾¼ã¿ã—ã‚ˆã†ã¨ã—ãŸãƒãƒƒãƒ•ã‚¡ã®åå‰ã®å‰ã«'ãƒ­ãƒ¼ã‚«ãƒ«'ã‚’ä»˜ã‘ã¦
+		" ç¾åœ¨ã®ã‚µãƒ¼ãƒãƒ¼ä¸Šã®å†…å®¹ã‚’å–å¾—ã—ã¦'diffthis'ã‚’å®Ÿè¡Œã™ã‚‹ã€‚
+		let status_line = 'ãƒ­ãƒ¼ã‚«ãƒ« ' . page . ' ' . site_name
 		execute ":f " . escape(status_line, ' ')
 		execute ":diffthis"
 		execute ":new"
 		call PW_get_edit_page(site_name, url, enc, top, page)
 		execute ":diffthis"
-		call AL_echo('¹¹¿·¤Î¾×ÆÍ¤¬È¯À¸¤·¤¿¤«¡¢¤½¤ÎÂ¾¤Î¥¨¥é¡¼¤Ç½ñ¤­¹ş¤á¤Ş¤»¤ó¤Ç¤·¤¿¡£', 'ErrorMsg')
+		call AL_echo('æ›´æ–°ã®è¡çªãŒç™ºç”Ÿã—ãŸã‹ã€ãã®ä»–ã®ã‚¨ãƒ©ãƒ¼ã§æ›¸ãè¾¼ã‚ã¾ã›ã‚“ã§ã—ãŸã€‚', 'ErrorMsg')
 		return 0
 	endif
 
 	call PW_get_edit_page(b:site_name, b:url, b:enc, b:top, b:page)
-	call AL_echo('¹¹¿·À®¸ù¡ª')
+	call AL_echo('æ›´æ–°æˆåŠŸï¼')
 
 endfunction"}}}
 
